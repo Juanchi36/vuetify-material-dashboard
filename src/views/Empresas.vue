@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
+    <v-layout wrap id="up">
       <v-flex sm6 xs12 md6 lg3>
         <material-stats-card
           color="red"
@@ -11,6 +11,7 @@
           sub-icon="mdi-pencil"
           sub-text="Last 24 Hours"
           style="margin-bottom: 5px !important"
+          onmouseover="this.style.cursor='move'"
         />
         <v-btn class="ma-2" color="black">Editar</v-btn>
       </v-flex>
@@ -25,6 +26,7 @@
           sub-text="Get More Space..."
           sub-text-color="text-primary"
           style="margin-bottom: 5px !important"
+          onmouseover="this.style.cursor='move'"
         />
         <v-btn class="ma-2" color="red">Editar</v-btn>
       </v-flex>
@@ -37,6 +39,7 @@
           sub-icon="mdi-tag"
           sub-text="Tracked from Github"
           style="margin-bottom: 5px !important"
+          onmouseover="this.style.cursor='move'"
         />
         <v-btn class="ma-2" color="black">Editar</v-btn>
       </v-flex>
@@ -49,6 +52,7 @@
           sub-icon="mdi-update"
           sub-text="Just Updated"
           style="margin-bottom: 5px !important"
+          onmouseover="this.style.cursor='move'"
         />
         <v-btn class="ma-2" color="red">Editar</v-btn>
       </v-flex>
@@ -57,7 +61,21 @@
 </template>
 
 <script>
+import Dragula from "dragula/dragula";
 export default {
+  mounted() {
+    let vm = this;
+    this.dragula = Dragula([
+      document.querySelector("#up"),
+      // document.querySelector("#center"),
+      // document.querySelector("#bottom")
+    ]).on("drop", (el, container, source) => {
+      if (source.id === container.id) {
+        return;
+      }
+      //source.id === "up";
+    });
+  },
   data() {
     return {
       dailySalesChart: {

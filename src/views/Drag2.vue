@@ -3,7 +3,6 @@
     <v-layout wrap>
       <v-flex md12 sm12 lg6>
         <div class="card shadow-3 no-margin" id="left">
-          <button>Hey</button>
           <button class="relative-position no-padding" value="5">
             <img src="./img/apple.svg" class="icon-size" alt />
             <span class="floating label bg-primary text-white">$5</span>
@@ -16,6 +15,7 @@
             <img src="./img/orange.svg" class="icon-size" alt />
             <span class="floating label bg-primary text-white">$2</span>
           </button>
+          <h3>Hey</h3>
         </div>
       </v-flex>
       <v-flex md12 sm12 lg6>
@@ -26,7 +26,7 @@
               <span ref="number"></span>
             </span>
           </h5>
-          <!-- <div id="right"></div> -->
+          <div id="right"></div>
         </div>
       </v-flex>
       <!-- <div class="auto self-end" v-show="totalCost > 0">
@@ -38,27 +38,55 @@
 
 <script>
 import Dragula from "dragula/dragula";
-//import CountUp from "countup.js";
+import CountUp from "countup.js";
 export default {
   mounted() {
     let vm = this;
-    this.dragula = Dragula([document.querySelector("#left")]).on(
-      "drop",
-      (el, container, source) => {
-        if (source.id === container.id) {
-          return;
-        }
-        source.id === "left";
+    this.dragula = Dragula([
+      document.querySelector("#left"),
+      document.querySelector("#right")
+    ]).on("drop", (el, container, source) => {
+      if (source.id === container.id) {
+        return;
       }
-    );
+      source.id === "left"
+        ? (vm.totalCost += parseInt(el.value))
+        : (vm.totalCost -= parseInt(el.value));
+    });
   },
-
+  watch: {
+    totalCost(newValue, oldValue) {
+      /* eslint-disable no-new */
+      let countUp = new CountUp(
+        this.$refs.number,
+        oldValue,
+        newValue,
+        0,
+        1.5,
+        this.options
+      );
+      countUp.start();
+    }
+  },
   data() {
     return {
       dragula: "",
+      totalCost: 0,
+      options: {
+        separator: "."
+      },
       move: ""
     };
-  }
+  },
+//   methods: {
+//     pay() {
+//       let vm = this;
+//       this.move = { animation: "cartOut 2s" };
+//       setTimeout(function() {
+//         vm.move = "";
+//       }, 2100);
+//     }
+//   }
 };
 </script>
 
@@ -72,7 +100,7 @@ export default {
   background-size: 300px 300px; */
   width: 300px;
   height: 320px;
-  /* border: 2px solid; */
+  border: 2px solid;
 }
 #span-price {
   margin-top: 16px;
@@ -82,14 +110,14 @@ export default {
 #left {
   margin-left: 87px;
   margin-top: 20px;
-  width: 90%;
-  /* height: 111px; */
+  width: 194px;
+  height: 111px;
 }
 #right {
   margin-left: 87px;
   margin-top: 20px;
-  width: 50%;
-  /* height: 111px; */
+  width: 194px;
+  height: 111px;
 }
 .icon-size {
   width: 56px;
