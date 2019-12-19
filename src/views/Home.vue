@@ -8,6 +8,7 @@
             :options="dailySalesChart.options"
             color="info"
             type="Line"
+            onmouseover="this.style.cursor='move'"
           >
             <h4 class="title font-weight-light">Daily Sales</h4>
             <p class="category d-inline-flex font-weight-light">
@@ -29,6 +30,7 @@
             :responsive-options="emailsSubscriptionChart.responsiveOptions"
             color="red"
             type="Bar"
+            onmouseover="this.style.cursor='move'"
           >
             <h4 class="title font-weight-light">Email Subscription</h4>
             <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
@@ -45,6 +47,7 @@
             :options="dataCompletedTasksChart.options"
             color="green"
             type="Line"
+            onmouseover="this.style.cursor='move'"
           >
             <h3 class="title font-weight-light">Completed Tasks</h3>
             <p class="category d-inline-flex font-weight-light">Last Last Campaign Performance</p>
@@ -65,6 +68,7 @@
             value="$34,245"
             sub-icon="mdi-calendar"
             sub-text="Last 24 Hours"
+            onmouseover="this.style.cursor='move'"
           />
         </v-flex>
         <v-flex sm6 xs12 md6 lg3>
@@ -78,6 +82,7 @@
             sub-icon-color="error"
             sub-text="Get More Space..."
             sub-text-color="text-primary"
+            onmouseover="this.style.cursor='move'"
           />
         </v-flex>
         <v-flex sm6 xs12 md6 lg3>
@@ -88,6 +93,7 @@
             value="75"
             sub-icon="mdi-tag"
             sub-text="Tracked from Github"
+            onmouseover="this.style.cursor='move'"
           />
         </v-flex>
         <v-flex sm6 xs12 md6 lg3>
@@ -98,6 +104,7 @@
             value="+245"
             sub-icon="mdi-update"
             sub-text="Just Updated"
+            onmouseover="this.style.cursor='move'"
           />
         </v-flex>
       </v-layout>
@@ -107,6 +114,7 @@
             color="orange"
             title="Employee Stats"
             text="New employees on 15th September, 2016"
+            onmouseover="this.style.cursor='move'"
           >
             <v-data-table :headers="headers" :items="items" hide-actions>
               <template slot="headerCell" slot-scope="{ header }">
@@ -123,7 +131,7 @@
           </material-card>
         </v-flex>
         <v-flex md12 lg6>
-          <material-card class="card-tabs" color="green">
+          <material-card class="card-tabs" color="green" onmouseover="this.style.cursor='move'">
             <v-flex slot="header">
               <v-tabs v-model="tabs" color="transparent" slider-color="white">
                 <span class="subheading font-weight-light mr-3" style="align-self: center">Tasks:</span>

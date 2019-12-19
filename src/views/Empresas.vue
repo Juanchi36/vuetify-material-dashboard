@@ -1,61 +1,138 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap id="up">
-      <v-flex sm6 xs12 md6 lg3>
-        <material-stats-card
-          color="red"
-          icon="mdi-cards-heart"
-          title="Teceng Gaming"
-          sub-title="Win"
-          value="$347,245"
-          sub-icon="mdi-pencil"
-          sub-text="Last 24 Hours"
-          style="margin-bottom: 5px !important"
-          onmouseover="this.style.cursor='move'"
-        />
-        <v-btn class="ma-2" color="black">Editar</v-btn>
-      </v-flex>
-      <v-flex sm6 xs12 md6 lg3>
-        <material-stats-card
-          color="black"
-          icon="mdi-cards-spade"
-          title="Oasis"
-          value="$325,115"
-          sub-icon="mdi-alert"
-          sub-icon-color="error"
-          sub-text="Get More Space..."
-          sub-text-color="text-primary"
-          style="margin-bottom: 5px !important"
-          onmouseover="this.style.cursor='move'"
-        />
-        <v-btn class="ma-2" color="red">Editar</v-btn>
-      </v-flex>
-      <v-flex sm6 xs12 md6 lg3>
-        <material-stats-card
-          color="red"
-          icon="mdi-cards-diamond"
-          title="Misiones"
-          value="$114,085"
-          sub-icon="mdi-tag"
-          sub-text="Tracked from Github"
-          style="margin-bottom: 5px !important"
-          onmouseover="this.style.cursor='move'"
-        />
-        <v-btn class="ma-2" color="black">Editar</v-btn>
-      </v-flex>
-      <v-flex sm6 xs12 md6 lg3>
-        <material-stats-card
-          color="black"
-          icon="mdi-cards-club"
-          title="Panamá"
-          value="$96,112"
-          sub-icon="mdi-update"
-          sub-text="Just Updated"
-          style="margin-bottom: 5px !important"
-          onmouseover="this.style.cursor='move'"
-        />
-        <v-btn class="ma-2" color="red">Editar</v-btn>
-      </v-flex>
+    <v-layout wrap class="mt-3">
+      <v-dialog v-model="dialog" max-width="500px">
+        <!-- <template v-slot:activator="{ on }"> -->
+        <template slot="activator" scope="{ on }">
+          <v-flex sm6 xs12 md6 lg12>
+            <v-btn
+              class="mx-2 mt-4"
+              absolute
+              dark
+              fab
+              top
+              right
+              color="green"
+              small
+              style="border-radius: 50px;"
+              v-on="on"
+            >
+              <v-icon dark>mdi-plus</v-icon>
+            </v-btn>
+          </v-flex>
+        </template>
+        <v-card>
+          <!-- <v-card-title>
+            <span class="headline">{{ formTitle }}</span>
+          </v-card-title>-->
+
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field label="Nombre"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field label="Código"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field label="Total"></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>
+            <v-btn color="blue darken-1" flat @click="save">Guardar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-layout wrap id="up">
+        <v-flex sm6 xs12 md6 lg3 v-for="(empresa, index) in empresas" :key="index">
+          <material-stats-card
+            :color="empresa.color"
+            :icon="empresa.icon"
+            :title="empresa.title"
+            :value="empresa.value"
+            :sub-icon="empresa.subIcon"
+            :sub-text="empresa.subText"
+            style="margin-bottom: 5px !important;"
+            onmouseover="this.style.cursor='move'"
+          />
+          <v-layout class="justify-end mr-1" style="margin-top: -25px !important">
+            <v-btn class="mx-2" fab dark small end color="green">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn class="mx-2" fab dark small color="red">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-layout>
+        </v-flex>
+        <!-- <v-flex sm6 xs12 md6 lg3>
+          <material-stats-card
+            color="black"
+            icon="mdi-cards-spade"
+            title="Oasis"
+            value="$325,115"
+            sub-icon="mdi-alert"
+            sub-icon-color="error"
+            sub-text="Get More Space..."
+            sub-text-color="text-primary"
+            style="margin-bottom: 5px !important"
+            onmouseover="this.style.cursor='move'"
+          />
+          <v-layout class="justify-end mr-1" style="margin-top: -25px !important">
+            <v-btn class="mx-2" fab dark small end color="green">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn class="mx-2" fab dark small color="red">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-layout>
+        </v-flex>-->
+        <!-- <v-flex sm6 xs12 md6 lg3>
+          <material-stats-card
+            color="red"
+            icon="mdi-cards-diamond"
+            title="Misiones"
+            value="$114,085"
+            sub-icon="mdi-tag"
+            sub-text="Tracked from Github"
+            style="margin-bottom: 5px !important"
+            onmouseover="this.style.cursor='move'"
+          />
+          <v-layout class="justify-end mr-1" style="margin-top: -25px !important">
+            <v-btn class="mx-2" fab dark small end color="green">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn class="mx-2" fab dark small color="red">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-layout>
+        </v-flex>-->
+        <!-- <v-flex sm6 xs12 md6 lg3>
+          <material-stats-card
+            color="black"
+            icon="mdi-cards-club"
+            title="Panamá"
+            value="$96,112"
+            sub-icon="mdi-update"
+            sub-text="Just Updated"
+            style="margin-bottom: 5px !important"
+            onmouseover="this.style.cursor='move'"
+          />
+          <v-layout class="justify-end mr-1" style="margin-top: -25px !important">
+            <v-btn class="mx-2" fab dark small end color="green">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn class="mx-2" fab dark small color="red">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-layout>
+        </v-flex>-->
+      </v-layout>
     </v-layout>
   </v-container>
 </template>
@@ -66,7 +143,7 @@ export default {
   mounted() {
     let vm = this;
     this.dragula = Dragula([
-      document.querySelector("#up"),
+      document.querySelector("#up")
       // document.querySelector("#center"),
       // document.querySelector("#bottom")
     ]).on("drop", (el, container, source) => {
@@ -78,6 +155,9 @@ export default {
   },
   data() {
     return {
+      empresas: [],
+      title: "Teceng Gaming",
+      dialog: false,
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -231,9 +311,77 @@ export default {
       }
     };
   },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    }
+  },
+  created() {
+    this.initialize();
+  },
   methods: {
+    initialize() {
+      this.empresas = [
+        {
+          color: "red",
+          icon: "mdi-cards-heart",
+          title: "Teceng Gaming",
+          value: "347,245",
+          subIcon: "mdi-pencil",
+          subText: "Last 24 Hours"
+        },
+        {
+          color: "black",
+          icon: "mdi-cards-spade",
+          title: "Oasis",
+          value: "$325,115",
+          subIcon: "mdi-alert",
+          subText: "Get More Space..."
+        },
+        {
+          color: "red",
+          icon: "mdi-cards-diamond",
+          title: "Misiones",
+          value: "$114,085",
+          subIcon: "mdi-tag",
+          subText: "Tracked from Github"
+        },
+        {
+          color: "black",
+          icon: "mdi-cards-club",
+          title: "Panamá",
+          value: "$96,112",
+          subIcon: "mdi-update",
+          subText: "Just Updated"
+        },
+        {
+          color: "black",
+          icon: "mdi-cards-club",
+          title: "Panamá",
+          value: "$96,112",
+          subIcon: "mdi-update",
+          subText: "Just Updated"
+        },
+      ];
+    },
     complete(index) {
       this.list[index] = !this.list[index];
+    },
+    close() {
+      this.dialog = false;
+      // setTimeout(() => {
+      //   this.editedItem = Object.assign({}, this.defaultItem);
+      //   this.editedIndex = -1;
+      // }, 300);
+    },
+
+    save() {
+      // if (this.editedIndex > -1) {
+      //   Object.assign(this.desserts[this.editedIndex], this.editedItem);
+      // } else {
+      //   this.desserts.push(this.editedItem);
+      // }
+      this.close();
     }
   }
 };
