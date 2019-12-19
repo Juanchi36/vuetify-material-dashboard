@@ -64,6 +64,14 @@ export default [
     path: '/crud',
     view: 'Crud'
   },
+  {
+    path: '/drag',
+    view: 'Drag'
+  },
+  {
+    path: '/drag2',
+    view: 'Drag2'
+  },
   // {
   //   path: '/maps',
   //   view: 'Maps'

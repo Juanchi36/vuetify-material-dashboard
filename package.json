@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "chartist": "0.11.0",
+    "countup.js": "^2.0.4",
+    "dragula": "^3.7.2",
     "node-sass": "^4.13.0",
     "sass-loader": "7.1.0",
     "vue": "2.5.22",
     "vue-chartist": "2.1.2",
     "vue-meta": "1.5.2",
+    "vue2-dragula": "^2.5.4",
     "vuetify": "1.4.3"
   },
   "devDependencies": {

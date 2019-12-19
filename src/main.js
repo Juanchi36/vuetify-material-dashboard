@@ -28,6 +28,14 @@ import { sync } from 'vuex-router-sync'
 import App from './App'
 import router from '@/router'
 import store from '@/store'
+import 'dragula/dist/dragula.css'
+
+import { Vue2Dragula } from 'vue2-dragula'
+Vue.use(Vue2Dragula, {
+  logging: {
+    service: true // to only log methods in service (DragulaService)
+  }
+});
 
 // Sync store with router
 sync(store, router)
