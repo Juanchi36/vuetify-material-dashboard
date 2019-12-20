@@ -78,6 +78,7 @@
 <script>
 export default {
   data: () => ({
+    // prueba: this.$store.state.test,
     dialog: false,
     pagination: {},
     headers: [

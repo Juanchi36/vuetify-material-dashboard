@@ -30,13 +30,13 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field label="Nombre"></v-text-field>
+                  <v-text-field v-model="editedItem.title" label="Nombre"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field label="Código"></v-text-field>
+                  <v-text-field v-model="editedItem.codigo" label="Código"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field label="Total"></v-text-field>
+                  <v-text-field v-model="editedItem.value" label="Total"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -50,12 +50,12 @@
         </v-card>
       </v-dialog>
       <v-layout wrap id="up">
-        <v-flex sm6 xs12 md6 lg3 v-for="(empresa, index) in empresas" :key="index">
+        <v-flex sm6 xs12 md6 lg4 v-for="(empresa, index) in empresas" :key="index">
           <material-stats-card
             :color="empresa.color"
             :icon="empresa.icon"
             :title="empresa.title"
-            :value="empresa.value"
+            :value="formValue(empresa.value)"
             :sub-icon="empresa.subIcon"
             :sub-text="empresa.subText"
             style="margin-bottom: 5px !important;"
@@ -63,75 +63,13 @@
           />
           <v-layout class="justify-end mr-1" style="margin-top: -25px !important">
             <v-btn class="mx-2" fab dark small end color="green">
-              <v-icon>mdi-pencil</v-icon>
+              <v-icon @click="editItem(empresa)">mdi-pencil</v-icon>
             </v-btn>
             <v-btn class="mx-2" fab dark small color="red">
-              <v-icon>mdi-delete</v-icon>
+              <v-icon @click="deleteItem(empresa)">mdi-delete</v-icon>
             </v-btn>
           </v-layout>
         </v-flex>
-        <!-- <v-flex sm6 xs12 md6 lg3>
-          <material-stats-card
-            color="black"
-            icon="mdi-cards-spade"
-            title="Oasis"
-            value="$325,115"
-            sub-icon="mdi-alert"
-            sub-icon-color="error"
-            sub-text="Get More Space..."
-            sub-text-color="text-primary"
-            style="margin-bottom: 5px !important"
-            onmouseover="this.style.cursor='move'"
-          />
-          <v-layout class="justify-end mr-1" style="margin-top: -25px !important">
-            <v-btn class="mx-2" fab dark small end color="green">
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn class="mx-2" fab dark small color="red">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-layout>
-        </v-flex>-->
-        <!-- <v-flex sm6 xs12 md6 lg3>
-          <material-stats-card
-            color="red"
-            icon="mdi-cards-diamond"
-            title="Misiones"
-            value="$114,085"
-            sub-icon="mdi-tag"
-            sub-text="Tracked from Github"
-            style="margin-bottom: 5px !important"
-            onmouseover="this.style.cursor='move'"
-          />
-          <v-layout class="justify-end mr-1" style="margin-top: -25px !important">
-            <v-btn class="mx-2" fab dark small end color="green">
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn class="mx-2" fab dark small color="red">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-layout>
-        </v-flex>-->
-        <!-- <v-flex sm6 xs12 md6 lg3>
-          <material-stats-card
-            color="black"
-            icon="mdi-cards-club"
-            title="Panamá"
-            value="$96,112"
-            sub-icon="mdi-update"
-            sub-text="Just Updated"
-            style="margin-bottom: 5px !important"
-            onmouseover="this.style.cursor='move'"
-          />
-          <v-layout class="justify-end mr-1" style="margin-top: -25px !important">
-            <v-btn class="mx-2" fab dark small end color="green">
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn class="mx-2" fab dark small color="red">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-layout>
-        </v-flex>-->
       </v-layout>
     </v-layout>
   </v-container>
@@ -139,6 +77,8 @@
 
 <script>
 import Dragula from "dragula/dragula";
+import { mapState, mapMutations } from "vuex";
+
 export default {
   mounted() {
     let vm = this;
@@ -153,162 +93,26 @@ export default {
       //source.id === "up";
     });
   },
+  computed: {
+    ...mapState("app", ["empresas"]),
+    // fill() {
+    //   return this.$store.app.empresas;
+    // }
+  },
   data() {
     return {
-      empresas: [],
-      title: "Teceng Gaming",
-      dialog: false,
-      dailySalesChart: {
-        data: {
-          labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[12, 17, 7, 17, 23, 18, 38]]
-        },
-        options: {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0
-          }
-        }
+      editedIndex: -1,
+      editedItem: {
+        title: "",
+        codigo: "",
+        value: ""
       },
-      dataCompletedTasksChart: {
-        data: {
-          labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
-          series: [[230, 750, 450, 300, 280, 240, 200, 190]]
-        },
-        options: {
-          lineSmooth: this.$chartist.Interpolation.cardinal({
-            tension: 0
-          }),
-          low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0
-          }
-        }
+      defaultItem: {
+        nombre: "",
+        codigo: "",
+        total: ""
       },
-      emailsSubscriptionChart: {
-        data: {
-          labels: [
-            "Ja",
-            "Fe",
-            "Ma",
-            "Ap",
-            "Mai",
-            "Ju",
-            "Jul",
-            "Au",
-            "Se",
-            "Oc",
-            "No",
-            "De"
-          ],
-          series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]]
-        },
-        options: {
-          axisX: {
-            showGrid: false
-          },
-          low: 0,
-          high: 1000,
-          chartPadding: {
-            top: 0,
-            right: 5,
-            bottom: 0,
-            left: 0
-          }
-        },
-        responsiveOptions: [
-          [
-            "screen and (max-width: 640px)",
-            {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc: function(value) {
-                  return value[0];
-                }
-              }
-            }
-          ]
-        ]
-      },
-      headers: [
-        {
-          sortable: false,
-          text: "ID",
-          value: "id"
-        },
-        {
-          sortable: false,
-          text: "Name",
-          value: "name"
-        },
-        {
-          sortable: false,
-          text: "Salary",
-          value: "salary",
-          align: "right"
-        },
-        {
-          sortable: false,
-          text: "Country",
-          value: "country",
-          align: "right"
-        },
-        {
-          sortable: false,
-          text: "City",
-          value: "city",
-          align: "right"
-        }
-      ],
-      items: [
-        {
-          name: "Dakota Rice",
-          country: "Niger",
-          city: "Oud-Tunrhout",
-          salary: "$35,738"
-        },
-        {
-          name: "Minerva Hooper",
-          country: "Curaçao",
-          city: "Sinaai-Waas",
-          salary: "$23,738"
-        },
-        {
-          name: "Sage Rodriguez",
-          country: "Netherlands",
-          city: "Overland Park",
-          salary: "$56,142"
-        },
-        {
-          name: "Philip Chanley",
-          country: "Korea, South",
-          city: "Gloucester",
-          salary: "$38,735"
-        },
-        {
-          name: "Doris Greene",
-          country: "Malawi",
-          city: "Feldkirchen in Kārnten",
-          salary: "$63,542"
-        }
-      ],
-      tabs: 0,
-      list: {
-        0: false,
-        1: false,
-        2: false
-      }
+      dialog: false
     };
   },
   watch: {
@@ -317,70 +121,98 @@ export default {
     }
   },
   created() {
-    this.initialize();
+    // this.initialize();
   },
   methods: {
-    initialize() {
-      this.empresas = [
-        {
-          color: "red",
-          icon: "mdi-cards-heart",
-          title: "Teceng Gaming",
-          value: "347,245",
-          subIcon: "mdi-pencil",
-          subText: "Last 24 Hours"
-        },
-        {
-          color: "black",
-          icon: "mdi-cards-spade",
-          title: "Oasis",
-          value: "$325,115",
-          subIcon: "mdi-alert",
-          subText: "Get More Space..."
-        },
-        {
-          color: "red",
-          icon: "mdi-cards-diamond",
-          title: "Misiones",
-          value: "$114,085",
-          subIcon: "mdi-tag",
-          subText: "Tracked from Github"
-        },
-        {
-          color: "black",
-          icon: "mdi-cards-club",
-          title: "Panamá",
-          value: "$96,112",
-          subIcon: "mdi-update",
-          subText: "Just Updated"
-        },
-        {
-          color: "black",
-          icon: "mdi-cards-club",
-          title: "Panamá",
-          value: "$96,112",
-          subIcon: "mdi-update",
-          subText: "Just Updated"
-        },
-      ];
+    // initialize() {
+    //   this.empresas = fill();
+    // },
+    formValue(value) {
+      return "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
+    // initialize() {
+    //   this.empresas = [
+    //     {
+    //       title: "Teceng Gaming",
+    //       color: "red",
+    //       icon: "mdi-cards-heart",
+    //       codigo: 1414,
+    //       value: 345896,
+    //       subIcon: "mdi-pencil",
+    //       subText: "Last 24 Hours"
+    //     },
+    //     {
+    //       title: "Oasis",
+    //       color: "black",
+    //       icon: "mdi-cards-spade",
+    //       codigo: "0123",
+    //       value: 325115,
+    //       subIcon: "mdi-alert",
+    //       subText: "Get More Space..."
+    //     },
+    //     {
+    //       title: "Misiones",
+    //       color: "red",
+    //       icon: "mdi-cards-diamond",
+    //       codigo: "2040",
+    //       value: 114085,
+    //       subIcon: "mdi-tag",
+    //       subText: "Tracked from Github"
+    //     },
+    //     {
+    //       title: "Panamá",
+    //       color: "black",
+    //       icon: "mdi-cards-club",
+    //       codigo: "1474",
+    //       value: 96112,
+    //       subIcon: "mdi-update",
+    //       subText: "Just Updated"
+    //     }
+    //   ];
+    // },
     complete(index) {
       this.list[index] = !this.list[index];
     },
     close() {
       this.dialog = false;
-      // setTimeout(() => {
-      //   this.editedItem = Object.assign({}, this.defaultItem);
-      //   this.editedIndex = -1;
-      // }, 300);
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
     },
-
+    editItem(item) {
+      //console.log(item);
+      this.editedIndex = this.empresas.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    deleteItem(item) {
+      const index = this.empresas.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.empresas.splice(index, 1);
+    },
     save() {
-      // if (this.editedIndex > -1) {
-      //   Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      // } else {
-      //   this.desserts.push(this.editedItem);
-      // }
+      if (this.editedItem) {
+        const icons = [
+          "mdi-cards-club/black",
+          "mdi-cards-diamond/red",
+          "mdi-cards-heart/red",
+          "mdi-cards-spade/black"
+        ];
+        const randIcon = icons[Math.floor(Math.random() * icons.length)];
+        const ico = randIcon.split("/")[0];
+        const col = randIcon.split("/")[1];
+        this.editedItem.icon = ico;
+        this.editedItem.color = col;
+        this.editedItem.subIcon = "mdi-update";
+        this.editedItem.subText = "Just Updated";
+      }
+      if (this.editedIndex > -1) {
+        Object.assign(this.empresas[this.editedIndex], this.editedItem);
+        //this.empresas[this.editedIndex].icon = "mdi-cards-club";
+      } else {
+        this.empresas.push(this.editedItem);
+      }
       this.close();
     }
   }
