@@ -7,7 +7,7 @@ export default {
       title: "Teceng Gaming",
       color: "red",
       icon: "mdi-cards-heart",
-      codigo: 1414,
+      codigo: "1414",
       value: 345896,
       subIcon: "mdi-pencil",
       subText: "Last 24 Hours"
@@ -38,6 +38,73 @@ export default {
       value: 96112,
       subIcon: "mdi-update",
       subText: "Just Updated"
+    }
+  ],
+  salas: [
+    {
+      codigo: "456242",
+      nombre: "Vip",
+      empresa: "Teceng Gaming",
+    },
+    {
+      codigo: "986557",
+      nombre: "Gold",
+      empresa: "Teceng Gaming",
+    },
+    {
+      codigo: "245874",
+      nombre: "Black",
+      empresa: "Oasis",
+    },
+    {
+      codigo: "755413",
+      nombre: "General",
+      empresa: "Misiones",
+    },
+    {
+      codigo: "635653",
+      nombre: "Plus",
+      empresa: "Misiones",
+    },
+    {
+      codigo: "245874",
+      nombre: "Black",
+      empresa: "Oasis",
+    },
+    {
+      codigo: "755413",
+      nombre: "General",
+      empresa: "Misiones",
+    },
+    {
+      codigo: "635653",
+      nombre: "Plus",
+      empresa: "Misiones",
+    },
+    {
+      codigo: "245874",
+      nombre: "Black",
+      empresa: "Oasis",
+    },
+    {
+      codigo: "755413",
+      nombre: "General",
+      empresa: "Misiones",
+    },
+    {
+      codigo: "635653",
+      nombre: "Plus",
+      empresa: "Misiones",
+    },
+    {
+      codigo: "245874",
+      nombre: "Black",
+      empresa: "Oasis",
+    },
+    {
+      codigo: "755413",
+      nombre: "General",
+      empresa: "Misiones",
     }
   ]
 }

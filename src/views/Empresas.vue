@@ -94,10 +94,7 @@ export default {
     });
   },
   computed: {
-    ...mapState("app", ["empresas"]),
-    // fill() {
-    //   return this.$store.app.empresas;
-    // }
+    ...mapState("app", ["empresas"])
   },
   data() {
     return {
@@ -130,46 +127,7 @@ export default {
     formValue(value) {
       return "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-    // initialize() {
-    //   this.empresas = [
-    //     {
-    //       title: "Teceng Gaming",
-    //       color: "red",
-    //       icon: "mdi-cards-heart",
-    //       codigo: 1414,
-    //       value: 345896,
-    //       subIcon: "mdi-pencil",
-    //       subText: "Last 24 Hours"
-    //     },
-    //     {
-    //       title: "Oasis",
-    //       color: "black",
-    //       icon: "mdi-cards-spade",
-    //       codigo: "0123",
-    //       value: 325115,
-    //       subIcon: "mdi-alert",
-    //       subText: "Get More Space..."
-    //     },
-    //     {
-    //       title: "Misiones",
-    //       color: "red",
-    //       icon: "mdi-cards-diamond",
-    //       codigo: "2040",
-    //       value: 114085,
-    //       subIcon: "mdi-tag",
-    //       subText: "Tracked from Github"
-    //     },
-    //     {
-    //       title: "Panamá",
-    //       color: "black",
-    //       icon: "mdi-cards-club",
-    //       codigo: "1474",
-    //       value: 96112,
-    //       subIcon: "mdi-update",
-    //       subText: "Just Updated"
-    //     }
-    //   ];
-    // },
+
     complete(index) {
       this.list[index] = !this.list[index];
     },
@@ -188,7 +146,7 @@ export default {
     },
     deleteItem(item) {
       const index = this.empresas.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
+      confirm("Está seguro que quiere borrar la empresa?") &&
         this.empresas.splice(index, 1);
     },
     save() {
