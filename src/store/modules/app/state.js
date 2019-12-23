@@ -106,5 +106,49 @@ export default {
       nombre: "General",
       empresa: "Misiones",
     }
+  ],
+  grupos: [
+    {
+      codigo: "176242",
+      nombre: "Grupo A",
+      empresa: "Teceng Gaming",
+      sala: "Gold",
+    },
+    {
+      codigo: "716557",
+      nombre: "Grupo B",
+      sala: "General",
+      empresa: "Oasis",
+    },
+    {
+      codigo: "176242",
+      nombre: "Grupo A",
+      sala: "Gold",
+      empresa: "Teceng Gaming",
+    },
+    {
+      codigo: "716557",
+      nombre: "Grupo B",
+      sala: "General",
+      empresa: "Oasis",
+    },
+    {
+      codigo: "176242",
+      nombre: "Grupo A",
+      sala: "Gold",
+      empresa: "Teceng Gaming",
+    },
+    {
+      codigo: "716557",
+      nombre: "Grupo B",
+      sala: "General",
+      empresa: "Oasis",
+    },
+    {
+      codigo: "176242",
+      nombre: "Grupo A",
+      sala: "Gold",
+      empresa: "Teceng Gaming",
+    },
   ]
 }

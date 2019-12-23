@@ -76,7 +76,8 @@
       </v-layout>
       <v-layout id="bottom">
         <v-flex md12 lg6>
-          <material-card
+          <lists-grupos onmouseover="this.style.cursor='move'"/>
+          <!-- <material-card
             color="orange"
             title="Employee Stats"
             text="New employees on 15th September, 2016"
@@ -94,10 +95,10 @@
                 <td class="text-xs-right">{{ item.city }}</td>
               </template>
             </v-data-table>
-          </material-card>
+          </material-card> -->
         </v-flex>
         <v-flex md12 lg6>
-          <material-card class="card-tabs" color="green" onmouseover="this.style.cursor='move'">
+          <!-- <material-card class="card-tabs" color="green" onmouseover="this.style.cursor='move'">
             <v-flex slot="header">
               <v-tabs v-model="tabs" color="transparent" slider-color="white">
                 <span class="subheading font-weight-light mr-3" style="align-self: center">Tasks:</span>
@@ -182,7 +183,8 @@
                 </v-list>
               </v-tab-item>
             </v-tabs-items>
-          </material-card>
+          </material-card> -->
+          <lists-salas onmouseover="this.style.cursor='move'"/>
         </v-flex>
       </v-layout>
     </v-layout>
